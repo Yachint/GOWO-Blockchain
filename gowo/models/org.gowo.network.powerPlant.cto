@@ -10,8 +10,11 @@ asset PowerPlant identified by PPJID {
   o JobStatus jobStatus default = "NEW"
   o DateTime jobDeadline
   o String extraNotes
+  o String DocumentID
   o String[] Officers
         --> GOWOHomeMinistry[] user
+  o String[] TPA
+        --> ThirdPartOrg[] tpaList
 }
 
 concept AuthorityValidation {
@@ -44,6 +47,7 @@ transaction createPlantJob {
   o DateTime jobDeadline
   o String extraNotes
   o String OfficerID
+  o String tpaID
 }
 
 event jobCreated {

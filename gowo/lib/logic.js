@@ -9,15 +9,17 @@ function createDocument(documentData){
         var factory = getFactory();
         var NS = 'org.gowo.network.document';
 
-        var documentID = 'CE502-05-12-18';
-        var document = factory.newResource(NS,'Document',documentID);
+        var document = factory.newResource(NS,'Document',documentData.documentID);
 
+        document.documentID = documentData.documentID;
+        document.documentName = documentData.documentName;
         document.creationDate = documentData.creationDate;
-        document.origin = documentData.origin;
-        document.destination = documentData.destination;
+        document.documentPath = documentData.documentPath;
+        document.statusType = document.statusType;
+
 
         var event = factory.newEvent(NS, 'DocumentCreated');
-        event.documentID = documentID;
+        event.documentID = documentData.documentID;
         emit(event);
 
         return documentRegistry.addAll([document]);

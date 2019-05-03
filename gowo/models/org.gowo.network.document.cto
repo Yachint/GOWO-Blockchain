@@ -6,7 +6,7 @@ asset Document identified by documentID {
   o String documentPath
   o DateTime creationDate
   o Status statusType default = "NEW"
-  o isVerified verifiedType default = "UNVERIFIED"
+  o isVerified verifiedType default = "UNVERIFIED" optional
 }
 
 enum Status {
@@ -23,6 +23,8 @@ enum isVerified {
 transaction CreateDocument {
   o String documentID
   o DateTime creationDate
+  o String documentName
+  o String documentPath
   o Status statusType default = "NEW"
 }
 

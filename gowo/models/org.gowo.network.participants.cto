@@ -39,8 +39,7 @@ participant ICICIBank extends GOWOParticipant {
 }
 
 participant ThirdPartOrg extends GOWOParticipant {
-  o String tenderID
-  o String tenderRelation --> PowerPlant powerPlant
+  o String tpaID
   o String orgName 
   o DateTime dateOfIssue
   o Integer tenderValue
