@@ -3,7 +3,7 @@
     "composer": "^0.20.8"
   },
   "name": "gowo",
-  "version": "0.0.23",
+  "version": "0.0.37",
   "description": "Government Offices Workflow on BLockchain",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/gowo.bna",
@@ -34,6 +34,11 @@
     "mocha": "latest"
   },
   "dependencies": {
-    "bls-lib": "^0.3.4"
+    "bls-lib": "^0.3.4",
+    "ipfs-api": "^26.1.2",
+    "pdfkit": "^0.9.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "websocket": "^1.0.28"
   }
 }

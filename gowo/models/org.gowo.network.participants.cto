@@ -4,6 +4,7 @@ import org.gowo.network.powerPlant.PowerPlant
 
 abstract participant GOWOParticipant identified by participantKey {
   o String participantKey
+  o String PublicKey
   o Contact personalDetails
 }
 

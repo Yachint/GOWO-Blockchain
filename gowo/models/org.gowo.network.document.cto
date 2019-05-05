@@ -3,10 +3,13 @@ namespace org.gowo.network.document
 asset Document identified by documentID {
   o String documentID
   o String documentName
-  o String documentPath
+  o String documentHash
+  o String AssignedTo
+  o String AssignedFrom
+  o String SigningAuthority
   o DateTime creationDate
   o Status statusType default = "NEW"
-  o isVerified verifiedType default = "UNVERIFIED" optional
+  o isVerified verifiedType default = "UNVERIFIED"
 }
 
 enum Status {
@@ -24,10 +27,52 @@ transaction CreateDocument {
   o String documentID
   o DateTime creationDate
   o String documentName
-  o String documentPath
+  o String documentHash
+  o String AssignedTo
+  o String AssignedFrom
+  o String SigningAuthority
   o Status statusType default = "NEW"
+  o isVerified verifiedType default = "UNVERIFIED"
 }
 
 event DocumentCreated {
+  o String documentID
+  o String AssignedTo
+}
+
+transaction ChangeAssignedStatus {
+  o String documentID
+  o String AssignedTo
+  o String AssignedFrom
+}
+
+event AssignedChanged {
+  o String documentID
+}
+
+transaction getDocument {
+  o String documentID
+}
+
+event documentRequested {
+  o String documentID
+  o String documentHash
+}
+
+transaction updateHash {
+  o String documentID
+  o String documentHash
+}
+
+event hashChanged {
+  o String documentID
+}
+
+transaction verifiedStatusChange {
+  o String documentID
+  o isVerified verifiedType
+}
+
+event verifiedDoc {
   o String documentID
 }

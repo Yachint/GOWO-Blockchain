@@ -37,6 +37,8 @@ function createPlantJob(plantJobData){
  
        var event = factory.newEvent(NS, 'jobCreated');
        event.PPJID = PPJID;
+       event.DocumentID = docID;
+       event.OfficerID = plantJobData.OfficerID;
        emit(event);
     //    var url = 'http://localhost:3000/api/org.gowo.network.document.CreateDocument';
     //    var typed = {
@@ -59,19 +61,24 @@ function createPlantJob(plantJobData){
     var factory = getFactory();
     var NS = 'org.gowo.network.document';
 
-    var name = 'DOC :'+plantJobData.jobName;
+    var name = plantJobData.jobName;
     var docID = generatePPJID(name,plantJobData.jobDeadline);
     var newDoc = factory.newResource(NS, 'Document', docID);
 
     var datetime = new Date();
 
     newDoc.documentName = plantJobData.tenderDescription;
-    newDoc.documentPath = '/home/var';
+    newDoc.documentHash = '/home/var';
+    newDoc.AssignedTo = plantJobData.OfficerID;
+    newDoc.AssignedFrom = '*Fabric Network*';
+    newDoc.SigningAuthority = plantJobData.OfficerID;
     newDoc.creationDate = datetime;
     newDoc.statusType = 'NEW'
+    newDoc.verifiedType = 'UNVERIFIED';
 
     var event = factory.newEvent(NS, 'DocumentCreated');
     event.documentID = docID;
+    event.AssignedTo = plantJobData.OfficerID;
     emit(event);
 
     return docRegistry.add(newDoc);
