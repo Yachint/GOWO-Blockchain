@@ -38,6 +38,12 @@ client.on('connect', (connection)=>{
                  processJobCreatedEvent(event);
                  downloadAndDecryptFile(event);
                  break;
+            case 'org.gowo.network.document.AssignedChanged':
+                 counter++;
+                 console.log('Event#', counter);
+                 processJobCreatedEvent(event);
+                 generatePDF(event);
+                 break;
                  
             default:
                 console.log("Ignored event :", event.$class);
@@ -81,7 +87,7 @@ function encryptAndUpload(filename, offid, docID){
         'ipfs add '+filename+'.gpg',
         function(err, data, stderr){
             console.log(data);
-            res = data.slice(6, 53);
+            res = data.slice(6, 52);
             console.log('Hash is  : ',res);
             updateTx(docID, res);
         }
@@ -118,8 +124,10 @@ function updateTx(docID, res){
 
 function downloadAndDecryptFile(event){
     data = event;
-    var DocumentID = data.DocumentID;
-    var hash = data.DocumentHash;
+    var DocumentID = data.documentID;
+    var hash = data.documentHash;
+    console.log(documentID);
+    console.log(hash);
     cmd.run('ipfs get '+hash);
     cmd.run(' gpg --decrypt '+hash+' > '+DocumentID+'.pdf');
 }

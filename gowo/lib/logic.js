@@ -51,6 +51,7 @@ function createDocument(documentData){
      }).then(function(){
          var event = getFactory().newEvent('org.gowo.network.document','AssignedChanged');
          event.documentID = documentData.documentID;
+         event.AssignedTo = documentData.AssignedTo;
          emit(event);
      }).catch(function(error){
          throw new Error(error);
@@ -112,8 +113,9 @@ function createDocument(documentData){
  * @param {org.gowo.network.document.getDocument} documentData
  * @transaction
  */
- var hash = '';
+
  function getDocument(documentData){
+    var hash= '';
     var docRegistry;
     return getAssetRegistry('org.gowo.network.document.Document').then(function(registry){
         docRegistry = registry;

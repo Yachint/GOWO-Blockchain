@@ -3,7 +3,7 @@
     "composer": "^0.20.8"
   },
   "name": "gowo",
-  "version": "0.0.37",
+  "version": "0.0.40",
   "description": "Government Offices Workflow on BLockchain",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/gowo.bna",

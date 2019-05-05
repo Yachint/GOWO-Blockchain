@@ -48,6 +48,7 @@ transaction ChangeAssignedStatus {
 
 event AssignedChanged {
   o String documentID
+  o String AssignedTo
 }
 
 transaction getDocument {
