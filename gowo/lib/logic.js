@@ -98,10 +98,12 @@ function createDocument(documentData){
        if(!docExist) throw new Error("PJOB :"+documentData.documentID," Not Found!!");
        var factory = getFactory();
        docExist.verifiedType = documentData.verifiedType;
+       docExist.relatedTPA = documentData.relatedTPA;
        return docRegistry.update(docExist);
     }).then(function(){
         var event = getFactory().newEvent('org.gowo.network.document','verifiedDoc');
         event.documentID = documentData.documentID;
+        event.relatedTPA = documentData.relatedTPA;
         emit(event);
     }).catch(function(error){
         throw new Error(error);

@@ -9,13 +9,16 @@ function createTransaction(moneyData){
         var factory = getFactory();
         var NS = 'org.gowo.network.money';
 
-        var walletID = 'WE-HOM-222';
+        var datetime = new Date();
+
+        var walletID = generatePPJID(moneyData.walletID,datetime);
         var money = factory.newResource(NS,'Money',walletID);
 
         money.amtToSend = moneyData.amtToSend;
+        money.bankNodeID = moneyData.bankNodeID;
         money.senderID = moneyData.senderID;
         money.recieverID = moneyData.recieverID;
-        money.transactionDate = moneyData.transactionDate;
+        money.transactionDate = datetime;
 
         var event = factory.newEvent(NS, 'TransactionCreated');
         event.walletID = walletID;
@@ -25,3 +28,14 @@ function createTransaction(moneyData){
 
     })
 }
+
+function generatePPJID(jobName, jobDeadline){
+    var dt = new Date(jobDeadline)
+   
+    var month = dt.getMonth()+1;
+    if((month+'').length == 1)  month = '0'+month;
+    var dayNum = dt.getDate();
+    if((dayNum+'').length == 1)  dayNum = '0'+dayNum;
+   
+    return jobName+'-'+month+'-'+dayNum+'-'+(dt.getFullYear()+'').substring(2,4);
+   }
