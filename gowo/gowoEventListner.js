@@ -77,7 +77,6 @@ doc
 
 }
 
-
 function encryptAndUpload(filename, offid, docID){
     console.log('In Encrypt :',offid);
     console.log('In Encrypt :',filename);
@@ -91,11 +90,7 @@ function encryptAndUpload(filename, offid, docID){
             console.log('Hash is  : ',res);
             updateTx(docID, res);
         }
-    );
-    
-    
-    
-    
+    ); 
 }
 
 function sleep(delay) {

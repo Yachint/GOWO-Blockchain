@@ -1,45 +1,48 @@
-# Minor Project Workflow
+# GOWO Blockchain - Minor Project Workflow
 
-## Things to do :
+## How to deploy :
 
-1. ### Build Front-End to Interact with HLF
+1. ### Install Hyperledger Fabric Pre-Requisites
 ---
-  - Website/Web client that can perform actions like :
-    1. Creating a transaction
-    2. Show all transactions ( By Accessing historian)
-    3. Create/Update/Delete an Asset etc.
-  - Website should have access control implemented :
-    1. Users will authenticate via password/private key that are locally stored (Either use REST Sever auth or build custom solution that checks the card of the user)
-    2. Admin should be able to manage existing cards, create new participants etc
+```bash
+- curl -O https://hyperledger.github.io/composer/v0.19/prereqs-ubuntu.sh
+- chmod u+x prereqs-ubuntu.sh
+- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+- touch .bash_profile
+- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+- nvm install --lts	
+- npm install -g composer-cli@0.19
+- npm install -g composer-rest-server@0.19
+- npm install -g generator-hyperledger-composer@0.19
+- npm install -g yo
+- npm install -g composer-playground@0.19
+- mkdir ~/fabric-dev-servers && cd ~/fabric-dev-servers
+- curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+tar -xvf fabric-dev-servers.tar.gz
+- cd ~/fabric-dev-servers
+- export FABRIC_VERSION=hlfv11
+- ./downloadFabric.sh
+- ./startFabric.sh
+- ./createPeerAdminCard.sh
+```
 
-
-2. ### Simple Chain code Demonstration (NOT IN LECTURES)
+2. ### Deploy GOWO - Blockchain Model to Hyperledger
 ---
-  - The chain code should be able to set up a simple contract between the government department , third party and the bank.
-  - Third party should be chosen either by voting or by who is giving the best price + previous reputation.
-  - Upon successful creation of asset from the third-party, the govt department will validate it and launch a transaction.
-  - An event to the bank-node to transfer said money to the third party's account which will also be done in the form of a transaction.
-
-
-3. ### Build Back-end JS files to complement Front-end
+```bash
+- cd GOWO-BLockchain/gowo
+- composer archive create -a dist/gowo040.bna --sourceType dir --sourceName .
+- cd dist
+- composer network install -a gowo040.bna -c PeerAdmin@hlfv1
+- composer network start -c PeerAdmin@hlfv1 -n gowo -V 0.0.40 -A admin -S adminpw
+- composer card import -f ./admin\@gowo.card
+- composer-rest-server -c admin@gowo -n always -w true
+- composer-playground
+```
+3. ### Starting Front End on port 4000
 ---
-  - Use Composer API or Rest-Server to make function calls to get following attributes (and others if needed in ) of the HLF:
-    1. Get Registries
-    2. Manage-Cards
-    3. Submit-Transaction
-    4. Create/Delete/Update an Asset/Resources
-    5. Create/Delete/Update a Participants
-    6. Get-Historian
-    7. Queries 
-    8. etc...
-
-
-4. ### Final Model Files creation and Unit-testing using Mocha and Chai
----
-
-- The Final Model files should contain every aspect/variable required to successfully demonstrate the chain code + general workings of the network
-	- Please consult the group before doing any major changes or adding new features
-	- The important functions of the network like creating transactions, updating assets etc, should be unit-tested 
-	- Any additional features added like Private Key encryption or document storage should also be unit-tested
-
+```bash
+- cd GOWO-Blockchain/front-end
+- chmod 755 server.js
+- node ./server.js
+```
 
