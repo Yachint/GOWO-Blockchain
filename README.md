@@ -37,6 +37,7 @@ tar -xvf fabric-dev-servers.tar.gz
 - composer card import -f ./admin\@gowo.card
 - composer-rest-server -c admin@gowo -n always -w true
 - composer-playground
+- node gowoEventListner.js
 ```
 3. ### Starting Front End on port 4000
 ---
