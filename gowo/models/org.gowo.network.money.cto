@@ -5,6 +5,7 @@ asset Money identified by walletID {
   o Integer amtToSend
   o String senderID
   o String recieverID
+  o String bankNodeID
   o DateTime transactionDate
 
 }
@@ -20,7 +21,7 @@ transaction CreateTransaction {
   o String senderID
   o String recieverID
   o Integer amtToSend
-  o DateTime transactionDate
+  o String bankNodeID
   o Status statusType default = "NEW_TX" 
 }
 

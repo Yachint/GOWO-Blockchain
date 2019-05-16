@@ -44,6 +44,11 @@ client.on('connect', (connection)=>{
                  processJobCreatedEvent(event);
                  generatePDF(event);
                  break;
+            case 'org.gowo.network.document.verifiedDoc':
+                 counter++;
+                 console.log('Event#', counter);
+                 makeTPATX(event);
+                 break
                  
             default:
                 console.log("Ignored event :", event.$class);
@@ -117,13 +122,39 @@ function updateTx(docID, res){
       });
 }
 
+function makeTPATX(event){
+    const requestOptions = {
+        uri : 'http://localhost:3000/api/org.gowo.network.document.updateHash',
+        method : 'POST',
+        body : {
+          "$class": "org.gowo.network.money.CreateTransaction",
+          "walletID": 'Wallet'+counter,
+          "senderID": 'YachintY',
+          "recieverID": event.relatedTPA,
+          "amtToSend": '100',
+          "bankNodeID": 'BAK01',
+          "statusType": "RECIEVED_TX"
+        },
+        json : true
+      }
+      
+      rp(requestOptions).then(data =>{
+        console.log("Success in POST REQUEST OF HASH!");
+      });
+}
+
 function downloadAndDecryptFile(event){
     data = event;
     var DocumentID = data.documentID;
     var hash = data.documentHash;
     console.log(documentID);
     console.log(hash);
-    cmd.run('ipfs get '+hash);
+    cmd.get(
+      'ipfs get '+hash,
+      function(err, data, stderr){
+          console.log(data);
+      }
+  );
     cmd.run(' gpg --decrypt '+hash+' > '+DocumentID+'.pdf');
 }
 
